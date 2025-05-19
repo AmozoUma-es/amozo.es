@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+/* Estilos para la línea de tiempo (ejemplo) */
+.timeline-container {
+  position: relative;
+}
+
+/* Si quieres una línea central visual */
+.timeline-line {
+  /* position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px; /* Ancho de la línea */
+  /* background-color: theme('colors.accent-green.DEFAULT');
+  height: 100%;
+  z-index: -1; /* Para que esté detrás de los items */
+  /* content: ''; */
+}
+
+.timeline-item-connector path {
+  stroke-dasharray: 1000; /* Para animaciones de dibujado */
+  stroke-dashoffset: 1000;
+  animation: draw-line 2s ease-out forwards;
+}
+
+@keyframes draw-line {
+  to {
+    stroke-dashoffset: 0;
+  }
+}

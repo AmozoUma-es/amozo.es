@@ -1,0 +1,21 @@
+---
+interface Props {
+  name: string;
+  logo: string;
+  experience: string;
+  period: string;
+  proficiency?: number; // 0-100, para una barra de progreso opcional
+}
+const { name, logo, experience, period, proficiency } = Astro.props;
+---
+<div class="group flex flex-col items-center p-4 bg-muted dark:bg-dark-muted rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 text-center">
+  <img src={logo} alt={`${name} logo`} class="w-16 h-16 mb-3 group-hover:scale-110 transition-transform duration-300"/>
+  <h3 class="text-lg font-semibold text-foreground dark:text-dark-foreground">{name}</h3>
+  <p class="text-xs text-muted-foreground dark:text-dark-muted-foreground mt-1">{period}</p>
+  <p class="text-sm font-medium text-accent-purple-DEFAULT dark:text-accent-purple-light mt-1">{experience}</p>
+  {proficiency && (
+    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 mt-2">
+      <div class="bg-accent-green-DEFAULT h-2.5 rounded-full" style={`width: ${proficiency}%`}></div>
+    </div>
+  )}
+</div>

@@ -1,0 +1,25 @@
+---
+// src/components/Footer.astro
+const currentYear = new Date().getFullYear();
+---
+<footer class="mt-auto border-t border-muted-foreground/20 dark:border-dark-muted-foreground/20 bg-muted/50 dark:bg-dark-muted/50">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-sm text-muted-foreground dark:text-dark-muted-foreground">
+    <p>
+      © {currentYear} Alejandro Mozo. Todos los derechos reservados.
+    </p>
+    <p class="mt-1">
+      Hecho con <a href="https://astro.build/" target="_blank" rel="noopener noreferrer" class="text-accent-purple-DEFAULT hover:underline">Astro</a>
+      y <a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer" class="text-accent-green-DEFAULT hover:underline">Tailwind CSS</a>.
+    </p>
+    <!-- Opcional: Pequeños iconos de redes sociales aquí también si lo deseas -->
+    <!-- <div class="mt-4 flex justify-center space-x-4">
+      <a href="#" class="hover:text-accent-green-DEFAULT">GH</a>
+      <a href="#" class="hover:text-accent-green-DEFAULT">LI</a>
+      <a href="#" class="hover:text-accent-green-DEFAULT">TW</a>
+    </div> -->
+  </div>
+</footer>
+
+<style>
+  
+</style>

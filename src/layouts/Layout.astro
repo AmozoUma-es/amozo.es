@@ -1,0 +1,82 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ContactSidebar from '../components/ContactSidebar.astro';
+import ThemeToggle from '../components/ThemeToggle.astro'; // Importar el toggle
+import '../styles/global.css'; // Importa estilos globales
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Alejandro Mozo, página personal" } = Astro.props;
+
+const contactInfo = {
+  email: "hola@amozo.es",
+  phone: "",
+  location: "Málaga, España",
+  socials: [
+    { name: "LinkedIn", url: "#", icon: "linkedin-icon.svg" }, // Reemplaza con SVGs reales o usa una librería
+    { name: "GitHub", url: "#", icon: "github-icon.svg" },
+    { name: "Twitter", url: "#", icon: "twitter-icon.svg" },
+  ]
+};
+---
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content={description} />
+  <meta name="viewport" content="width=device-width" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="generator" content={Astro.generator} />
+  <title>{title}</title>
+  <script is:inline>
+    const theme = (() => {
+      if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+        return localStorage.getItem('theme');
+      }
+      // Comprueba si el sistema operativo prefiere el modo oscuro Y no hay preferencia explícita del usuario
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+      }
+      return 'light'; // Por defecto a claro si no hay nada guardado ni preferencia del sistema
+    })();
+
+    if (theme === 'light') {
+      document.documentElement.classList.remove('dark');
+    } else {
+      document.documentElement.classList.add('dark');
+    }
+    // Opcional: guardar el tema actual globalmente para que Astro lo pueda leer si es necesario en el servidor (menos común para este caso)
+    // NO es necesario para que el cliente funcione: window.localStorage.setItem('theme', theme);
+    // De hecho, el localStorage.setItem('theme', theme) aquí podría ser redundante
+    // si ya lo haces al cargar (getItem) y al cambiar (setItem en ThemeToggle).
+    // Lo más importante es aplicar la clase al documentElement.
+  </script>
+</head>
+<body class="bg-background dark:bg-dark-background text-foreground dark:text-dark-foreground font-sans transition-colors duration-300">
+  <div class="flex min-h-screen">
+    <!-- Sidebar de Contacto (visible en escritorio, quizás oculto/diferente en móvil) -->
+    <ContactSidebar {...contactInfo} class="hidden md:block fixed top-0 left-0 h-screen w-64 lg:w-72 p-8 bg-muted dark:bg-dark-muted border-r border-muted-foreground/20 dark:border-dark-muted-foreground/20 overflow-y-auto" />
+
+    <!-- Contenido Principal -->
+    <div class="flex-1 md:ml-64 lg:ml-72"> {/* Ajusta el margen para el sidebar */}
+      <Header>
+        <ThemeToggle />
+      </Header>
+      <main class="container mx-auto px-4 py-8">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+
+    {/* Sidebar de Contacto para móviles (podría ser un botón que abre un off-canvas) */}
+    {/* <div class="md:hidden fixed bottom-0 left-0 right-0 bg-gray-100 dark:bg-gray-800 p-4">
+        Móvil Contacto/Nav
+    </div> */}
+  </div>
+</body>
+</html>

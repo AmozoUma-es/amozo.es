@@ -1,0 +1,18 @@
+---
+import TechItem from './TechItem.astro';
+// Datos de ejemplo
+const technologies = [
+  { name: "JavaScript", logo: "/images/tech-js.svg", experience: "5 años", proficiency: 90, period: "2018 - Presente" },
+  { name: "React", logo: "/images/tech-react.svg", experience: "4 años", proficiency: 85, period: "2019 - Presente" },
+  { name: "Astro", logo: "/images/tech-astro.svg", experience: "1 año", proficiency: 75, period: "2023 - Presente" },
+  { name: "Tailwind CSS", logo: "/images/tech-tailwind.svg", experience: "3 años", proficiency: 95, period: "2020 - Presente" },
+];
+---
+<section id="technologies" class="py-12">
+  <h2 class="text-3xl font-bold mb-10 text-center text-accent-green-DEFAULT dark:text-accent-green-light">Tecnologías</h2>
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-4xl mx-auto">
+    {technologies.map(tech => (
+      <TechItem {...tech} />
+    ))}
+  </div>
+</section>

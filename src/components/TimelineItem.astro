@@ -1,0 +1,57 @@
+---
+interface Props {
+  id: string | number;
+  date: string;
+  title: string;
+  subtitle?: string;
+  description: string;
+  image?: string;
+  isLast: boolean;
+  index: number;
+  totalItems: number;
+  accentColorClass: string;
+}
+const { date, title, subtitle, description, image, isLast, index, accentColorClass } = Astro.props;
+
+const contentAlignmentClass = index % 2 === 0 ? 'sm:pr-8' : 'sm:pl-8 text-left sm:text-left';
+---
+<div class={`relative mb-8 sm:mb-0 flex flex-col sm:flex-row items-start ${index % 2 === 0 ? '' : 'sm:flex-row-reverse'}`}>
+  <div class="flex-shrink-0 w-full sm:w-1/2 relative px-4">
+    <div class={`absolute top-1 left-0 sm:left-1/2 transform -translate-x-1/2 sm:-translate-x-1/2 -translate-y-0 z-10 w-6 h-6 rounded-full border-4 border-background dark:border-dark-background ${accentColorClass.replace('text-', 'bg-')}`}></div>
+
+    { !isLast && (
+      <div class="absolute top-4 left-0 transform -translate-x-1/2 sm:left-1/2 sm:-translate-x-1/2 h-full w-0.5">
+        <svg class="w-full h-full overflow-visible text-muted-foreground/60 dark:text-dark-muted-foreground/60" viewBox="0 0 20 100" preserveAspectRatio="none">
+          <path
+            d="M10 0 V100"
+            stroke="currentColor"
+            stroke-width="2"
+            fill="none"
+            class="timeline-item-connector-path"
+          />
+          {/*
+          // Para una curva, el path sería más complejo, pero el principio del stroke es el mismo:*/}
+          <path d={`M10,0 Q ${index % 2 === 0 ? -30 : 50},50 10,100`}
+                stroke="currentColor"
+                stroke-width="2"
+                fill="none"
+                class="timeline-item-connector-path" />
+        </svg>
+      </div>
+    )}
+  </div>
+
+  <div class={`w-full sm:w-1/2 pb-8 ${contentAlignmentClass}`}>
+    {/* ... resto del contenido del hito ... */}
+  </div>
+</div>
+
+<style>
+.timeline-item-connector-path { /* Renombrado para evitar colisión con la clase del contenedor */
+  /* stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  animation: draw-curve 1.5s ease-out forwards;
+  animation-delay: calc(var(--item-index) * 0.3s); */
+}
+/* ... keyframes draw-curve ... */
+</style>

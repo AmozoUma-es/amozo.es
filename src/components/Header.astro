@@ -1,0 +1,29 @@
+---
+// src/components/Header.astro
+// No se necesitan props para este header básico por ahora
+// Pero podrías añadir un título si quieres: export interface Props { siteTitle?: string; }
+// const { siteTitle } = Astro.props;
+---
+<header class="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] bg-background/75 dark:bg-dark-background/75">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Izquierda del Header: Puedes poner un logo o título del sitio si quieres -->
+        <div class="flex-shrink-0">
+          <a href="/" class="text-2xl font-bold text-accent-green-DEFAULT dark:text-accent-green-light hover:opacity-80 transition-opacity">
+            Tu Nombre / Logo
+          </a>
+          <!-- O si no quieres nada aquí, puedes dejarlo vacío o un simple div -->
+          <!-- <span></span> -->
+        </div>
+  
+        <!-- Derecha del Header: Aquí va el ThemeToggle -->
+        <div class="flex items-center">
+          <slot /> <!-- Aquí es donde se renderizará <ThemeToggle client:load /> -->
+        </div>
+      </div>
+    </div>
+  </header>
+  
+  <style>
+    
+  </style>
