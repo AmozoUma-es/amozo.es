@@ -1,4 +1,23 @@
+/* @config "../../tailwind.config.js"; esto es por si se quiere usar el archivo de tailwind v3 */
+
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Colores para modo claro */
+  --color-background: hsl(0, 0%, 100%);
+  --color-foreground: hsl(222.2, 84%, 4.9%);
+  /* Colores para modo oscuro */
+  --color-dark-background: hsl(222.2, 84%, 4.9%);
+  --color-dark-foreground: hsl(0, 0%, 100%);
+  /* Accent greens */
+  --color-accent-green: darkgreen;
+  --color-accent-green-light: aquamarine;
+  /* Accent purples */
+  --color-accent-purple: rebeccapurple;
+  --color-accent-purple-light: plum;
+}
 
 /* Estilos para la línea de tiempo (ejemplo) */
 .timeline-container {
