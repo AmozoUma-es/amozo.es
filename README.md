@@ -1,0 +1,2 @@
+# amozo.es
+Personal website
