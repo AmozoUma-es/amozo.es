@@ -1,82 +1,119 @@
 ---
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import ContactSidebar from '../components/ContactSidebar.astro';
-import ThemeToggle from '../components/ThemeToggle.astro'; // Importar el toggle
-import '../styles/global.css'; // Importa estilos globales
-
-interface Props {
+export interface Props {
   title: string;
-  description?: string;
 }
 
-const { title, description = "Alejandro Mozo, página personal" } = Astro.props;
-
-const contactInfo = {
-  email: "hola@amozo.es",
-  phone: "",
-  location: "Málaga, España",
-  socials: [
-    { name: "LinkedIn", url: "#", icon: "linkedin-icon.svg" }, // Reemplaza con SVGs reales o usa una librería
-    { name: "GitHub", url: "#", icon: "github-icon.svg" },
-    { name: "Twitter", url: "#", icon: "twitter-icon.svg" },
-  ]
-};
+const { title } = Astro.props;
 ---
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="description" content={description} />
-  <meta name="viewport" content="width=device-width" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <meta name="generator" content={Astro.generator} />
-  <title>{title}</title>
-  <script is:inline>
-    const theme = (() => {
-      if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-        return localStorage.getItem('theme');
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Curriculum Vitae Personal" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>{title}</title>
+  </head>
+  <body class="font-sans antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+    <slot />
+    <script>
+      // Theme management
+      const getThemePreference = () => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      };
+
+      const isDark = getThemePreference() === 'dark';
+      document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+
+      if (typeof localStorage !== 'undefined') {
+        const observer = new MutationObserver(() => {
+          const isDark = document.documentElement.classList.contains('dark');
+          localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
       }
-      // Comprueba si el sistema operativo prefiere el modo oscuro Y no hay preferencia explícita del usuario
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        return 'dark';
-      }
-      return 'light'; // Por defecto a claro si no hay nada guardado ni preferencia del sistema
-    })();
 
-    if (theme === 'light') {
-      document.documentElement.classList.remove('dark');
-    } else {
-      document.documentElement.classList.add('dark');
-    }
-    // Opcional: guardar el tema actual globalmente para que Astro lo pueda leer si es necesario en el servidor (menos común para este caso)
-    // NO es necesario para que el cliente funcione: window.localStorage.setItem('theme', theme);
-    // De hecho, el localStorage.setItem('theme', theme) aquí podría ser redundante
-    // si ya lo haces al cargar (getItem) y al cambiar (setItem en ThemeToggle).
-    // Lo más importante es aplicar la clase al documentElement.
-  </script>
-</head>
-<body class="bg-background dark:bg-dark-background text-foreground dark:text-dark-foreground font-sans transition-colors duration-300">
-  <div class="flex min-h-screen">
-    <!-- Sidebar de Contacto (visible en escritorio, quizás oculto/diferente en móvil) -->
-    <ContactSidebar {...contactInfo} class="hidden md:block fixed top-0 left-0 h-screen w-64 lg:w-72 p-8 bg-muted dark:bg-dark-muted border-r border-muted-foreground/20 dark:border-dark-muted-foreground/20 overflow-y-auto" />
+      // Theme toggle
+      window.toggleTheme = () => {
+        document.documentElement.classList.toggle('dark');
+      };
 
-    <!-- Contenido Principal -->
-    <div class="flex-1 md:ml-64 lg:ml-72"> {/* Ajusta el margen para el sidebar */}
-      <Header>
-        <ThemeToggle />
-      </Header>
-      <main class="container mx-auto px-4 py-8">
-        <slot />
-      </main>
-      <Footer />
-    </div>
+      // Modal functionality
+      window.openModal = (images, title) => {
+        const modal = document.getElementById('modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalContent = document.getElementById('modal-content');
+        
+        modalTitle.textContent = title;
+        modalContent.innerHTML = '';
+        
+        images.forEach((src, index) => {
+          const container = document.createElement('div');
+          container.className = 'mb-6 animate-fade-in';
+          container.style.animationDelay = `${index * 0.1}s`;
+          
+          if (src.includes('.mp4') || src.includes('.webm')) {
+            const video = document.createElement('video');
+            video.src = src;
+            video.controls = true;
+            video.className = 'w-full rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300';
+            container.appendChild(video);
+          } else {
+            const img = document.createElement('img');
+            img.src = src;
+            img.className = 'w-full rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300';
+            container.appendChild(img);
+          }
+          
+          modalContent.appendChild(container);
+        });
+        
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+      };
 
-    {/* Sidebar de Contacto para móviles (podría ser un botón que abre un off-canvas) */}
-    {/* <div class="md:hidden fixed bottom-0 left-0 right-0 bg-gray-100 dark:bg-gray-800 p-4">
-        Móvil Contacto/Nav
-    </div> */}
-  </div>
-</body>
+      window.closeModal = () => {
+        const modal = document.getElementById('modal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.style.overflow = 'auto';
+      };
+
+      // Close modal on outside click
+      document.addEventListener('click', (e) => {
+        const modal = document.getElementById('modal');
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+
+      // Intersection Observer for scroll animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+          }
+        });
+      }, observerOptions);
+
+      // Initialize observer when DOM is loaded
+      document.addEventListener('DOMContentLoaded', () => {
+        const animatableElements = document.querySelectorAll('.animate-on-scroll');
+        animatableElements.forEach(el => observer.observe(el));
+      });
+    </script>
+  </body>
 </html>

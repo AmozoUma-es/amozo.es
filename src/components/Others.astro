@@ -1,0 +1,129 @@
+---
+const others = [
+  {
+    title: "AWS Solutions Architect",
+    image: "/icons/aws.svg",
+    date: "2023",
+    category: "Certificación",
+    description: "Certificación profesional en Amazon Web Services - Solutions Architect Associate. Diseño de arquitecturas escalables y seguras en la nube.",
+    link: "https://aws.amazon.com/certification/"
+  },
+  {
+    title: "Hackathon Tech Innovation",
+    image: "/images/hackathon.jpg",
+    date: "2022", 
+    category: "Premio",
+    description: "🏆 Primer lugar en hackathon nacional con una aplicación de sostenibilidad urbana que optimiza rutas de transporte público usando IA.",
+    link: null
+  },
+  {
+    title: "Machine Learning Specialization",
+    image: "/icons/ml.svg",
+    date: "2022",
+    category: "Curso",
+    description: "Especialización completa en Machine Learning con Python, TensorFlow y PyTorch. Proyectos prácticos en visión por computadora y NLP.",
+    link: "https://coursera.org/specializations/machine-learning"
+  },
+  {
+    title: "Open Source Contributor",
+    image: "/icons/github.svg",
+    date: "2021-2024",
+    category: "Contribución",
+    description: "Contribuidor activo en proyectos open source. +50 PRs aceptados en librerías populares de React y Node.js.",
+    link: "https://github.com/usuario"
+  }
+];
+
+const getCategoryColor = (category) => {
+  const colors = {
+    'Certificación': { bg: 'rgba(59, 130, 246, 0.1)', color: '#1d4ed8', gradient: 'linear-gradient(135deg, #3b82f6, #2563eb)' },
+    'Premio': { bg: 'rgba(245, 158, 11, 0.1)', color: '#d97706', gradient: 'linear-gradient(135deg, #f59e0b, #d97706)' },
+    'Curso': { bg: 'rgba(34, 197, 94, 0.1)', color: '#15803d', gradient: 'linear-gradient(135deg, #22c55e, #16a34a)' },
+    'Contribución': { bg: 'rgba(147, 51, 234, 0.1)', color: '#7c3aed', gradient: 'linear-gradient(135deg, #9333ea, #7c3aed)' }
+  };
+  return colors[category] || colors['Certificación'];
+};
+---
+
+<section id="others" class="py-20 px-4 bg-white dark:bg-gray-900">
+  <div class="container mx-auto max-w-6xl">
+    <div class="text-center mb-16 animate-on-scroll">
+      <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full mb-4" style="background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(59, 130, 246, 0.1));">
+        <svg class="w-5 h-5" style="color: #0ea5e9;" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+        </svg>
+        <span class="font-semibold text-gradient-primary">Logros y Reconocimientos</span>
+      </div>
+      
+      <h2 class="text-4xl lg:text-5xl font-display font-bold text-gray-800 dark:text-white mb-4">
+        Otros Logros
+      </h2>
+      <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        Certificaciones, premios y contribuciones que demuestran mi compromiso con la excelencia
+      </p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {others.map((item, index) => (
+        <div class="group animate-on-scroll" style={`animation-delay: ${index * 0.1}s`}>
+          <div class="card hover-lift h-full relative">
+            <!-- Category badge -->
+            <div class="absolute -top-3 -right-3">
+              <span class="px-3 py-1 text-white text-xs font-semibold rounded-full shadow-lg" style={`background: ${getCategoryColor(item.category).gradient};`}>
+                {item.category}
+              </span>
+            </div>
+            
+            <!-- Image/Icon -->
+            <div class="flex justify-center mb-6">
+              <div class="relative">
+                <div class="w-20 h-20 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300" style="background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);">
+                  <img 
+                    src={item.image} 
+                    alt={item.title}
+                    class="w-12 h-12 rounded-lg object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+            
+            <!-- Content -->
+            <div class="text-center space-y-4">
+              <h3 class="text-lg font-display font-bold text-gray-800 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                {item.title}
+              </h3>
+              
+              <div class="flex items-center justify-center space-x-2">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                <span class="text-sm text-gray-500 dark:text-gray-400 font-medium">
+                  {item.date}
+                </span>
+              </div>
+              
+              <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                {item.description}
+              </p>
+              
+              {item.link && (
+                <div class="pt-2">
+                  <a 
+                    href={item.link}
+                    target="_blank"
+                    class="inline-flex items-center space-x-2 px-4 py-2 text-white text-sm font-medium rounded-lg transition-all duration-200 hover:scale-105" style="background: linear-gradient(135deg, #3b82f6, #0ea5e9);"
+                  >
+                    <span>Ver más</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                    </svg>
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

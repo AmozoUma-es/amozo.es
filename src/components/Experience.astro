@@ -1,0 +1,120 @@
+---
+const experience = [
+  {
+    company: "Tech Company",
+    logo: "/icons/company1.svg",
+    position: "Senior Full Stack Developer",
+    startDate: "2022",
+    endDate: "Presente",
+    description: "Liderazgo técnico en el desarrollo de aplicaciones web escalables usando React, Node.js y microservicios. Mentoring a desarrolladores junior y optimización de rendimiento.",
+    technologies: ["React", "Node.js", "TypeScript", "AWS", "Docker"],
+    achievements: ["Redujo tiempo de carga 40%", "Lideró equipo de 5 devs", "Implementó CI/CD"]
+  },
+  {
+    company: "Startup Innovadora",
+    logo: "/icons/company2.svg",
+    position: "Full Stack Developer", 
+    startDate: "2020",
+    endDate: "2022",
+    description: "Desarrollo completo de MVP desde cero, implementación de arquitectura escalable y trabajo directo con stakeholders para definir requerimientos técnicos.",
+    technologies: ["Vue.js", "Python", "PostgreSQL", "Redis"],
+    achievements: ["Desarrolló MVP en 3 meses", "Escaló a 10K usuarios", "Implementó real-time features"]
+  }
+];
+---
+
+<section id="experience" class="py-20 px-4 bg-white dark:bg-gray-900">
+  <div class="container mx-auto max-w-6xl">
+    <div class="text-center mb-16 animate-on-scroll">
+      <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full mb-4" style="background: rgba(14, 165, 233, 0.1);">
+        <svg class="w-5 h-5" style="color: #0ea5e9;" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+          <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"/>
+        </svg>
+        <span style="color: #0369a1;" class="font-semibold">Trayectoria Profesional</span>
+      </div>
+      
+      <h2 class="text-4xl lg:text-5xl font-display font-bold text-gray-800 dark:text-white mb-4">
+        Experiencia Laboral
+      </h2>
+      <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        Construyendo soluciones innovadoras y liderando equipos de desarrollo
+      </p>
+    </div>
+    
+    <div class="relative">
+      <!-- Timeline line -->
+      <div class="absolute left-8 lg:left-1/2 top-0 bottom-0 w-0.5 transform lg:-translate-x-px" style="background: linear-gradient(to bottom, #3b82f6, #0ea5e9, #3b82f6);"></div>
+      
+      <div class="space-y-12">
+        {experience.map((job, index) => (
+          <div class={`group animate-on-scroll flex flex-col lg:flex-row items-start gap-8 ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'}`} style={`animation-delay: ${index * 0.3}s`}>
+            <!-- Timeline dot -->
+            <div class="absolute left-6 lg:left-1/2 w-4 h-4 rounded-full transform lg:-translate-x-2 shadow-lg ring-4 ring-white dark:ring-gray-900 group-hover:scale-125 transition-transform duration-300" style="background: linear-gradient(135deg, #3b82f6, #0ea5e9);"></div>
+            
+            <!-- Content card -->
+            <div class={`flex-1 ml-16 lg:ml-0 ${index % 2 === 0 ? 'lg:mr-8' : 'lg:ml-8'}`}>
+              <div class="card hover-lift group-hover:shadow-2xl">
+                <!-- Header -->
+                <div class="flex items-start gap-6 mb-6">
+                  <div class="flex-shrink-0">
+                    <div class="w-16 h-16 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300" style="background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);">
+                      <img src={job.logo} alt={job.company} class="w-10 h-10 rounded-lg" />
+                    </div>
+                  </div>
+                  
+                  <div class="flex-1">
+                    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2 mb-2">
+                      <h3 class="text-2xl font-display font-bold text-gray-800 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                        {job.company}
+                      </h3>
+                      <span class="px-4 py-2 rounded-full text-sm font-semibold" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(14, 165, 233, 0.1)); color: #1d4ed8;">
+                        {job.startDate} - {job.endDate}
+                      </span>
+                    </div>
+                    
+                    <p class="text-xl font-semibold mb-4" style="color: #0ea5e9;">
+                      {job.position}
+                    </p>
+                  </div>
+                </div>
+                
+                <!-- Description -->
+                <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+                  {job.description}
+                </p>
+                
+                <!-- Technologies -->
+                <div class="mb-6">
+                  <h4 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">Tecnologías</h4>
+                  <div class="flex flex-wrap gap-2">
+                    {job.technologies.map(tech => (
+                      <span class="px-3 py-1 text-sm font-medium rounded-full hover:scale-105 transition-transform duration-200" style="background: rgba(59, 130, 246, 0.1); color: #1e40af;">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                
+                <!-- Achievements -->
+                <div>
+                  <h4 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">Logros Destacados</h4>
+                  <div class="space-y-2">
+                    {job.achievements.map(achievement => (
+                      <div class="flex items-center space-x-2">
+                        <svg class="w-4 h-4 flex-shrink-0" style="color: #10b981;" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-gray-600 dark:text-gray-300 text-sm">{achievement}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
